@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheatTable CheatEngineTableVersion="18">
+  <CheatEntries>
+    <CheatEntry>
+      <ID>4</ID>
+      <Description>"further zoom"</Description>
+      <LastState Activated="1"/>
+      <Color>80000008</Color>
+      <VariableType>Auto Assembler Script</VariableType>
+      <AssemblerScript>{ Game   : EoCApp.exe
+  Version: 
+  Date   : 2015-12-12
+  Author : Deo
+
+  This script does blah blah blah
+}
+
+define(address,"EoCApp.exe"+97E27A)
+define(bytes,F3 0F 10 93 7C 01 00 00)
+
+[ENABLE]
+
+assert(address,bytes)
+alloc(newmem,$1000,"EoCApp.exe"+97E27A)
+
+label(code)
+label(return)
+
+newmem:
+
+code:
+  movss xmm2,[rbx+0000017C]
+  addss xmm2,xmm2
+  jmp return
+
+address:
+  jmp code
+  nop
+  nop
+  nop
+return:
+
+[DISABLE]
+
+address:
+  db bytes
+  // movss xmm2,[rbx+0000017C]
+
+dealloc(newmem)
+
+{
+// ORIGINAL CODE - INJECTION POINT: "EoCApp.exe"+97E27A
+
+"EoCApp.exe"+97E254: 83 F9 01                    -  cmp ecx,01
+"EoCApp.exe"+97E257: 76 0A                       -  jna EoCApp.exe+97E263
+"EoCApp.exe"+97E259: F3 0F 10 93 94 01 00 00     -  movss xmm2,[rbx+00000194]
+"EoCApp.exe"+97E261: EB 1F                       -  jmp EoCApp.exe+97E282
+"EoCApp.exe"+97E263: 84 C0                       -  test al,al
+"EoCApp.exe"+97E265: 74 13                       -  je EoCApp.exe+97E27A
+"EoCApp.exe"+97E267: 80 BB F5 00 00 00 00        -  cmp byte ptr [rbx+000000F5],00
+"EoCApp.exe"+97E26E: 74 0A                       -  je EoCApp.exe+97E27A
+"EoCApp.exe"+97E270: F3 0F 10 93 88 01 00 00     -  movss xmm2,[rbx+00000188]
+"EoCApp.exe"+97E278: EB 08                       -  jmp EoCApp.exe+97E282
+// ---------- INJECTING HERE ----------
+"EoCApp.exe"+97E27A: F3 0F 10 93 7C 01 00 00     -  movss xmm2,[rbx+0000017C]
+// ---------- DONE INJECTING  ----------
+"EoCApp.exe"+97E282: 83 F9 01                    -  cmp ecx,01
+"EoCApp.exe"+97E285: 76 0A                       -  jna EoCApp.exe+97E291
+"EoCApp.exe"+97E287: F3 0F 10 8B 90 01 00 00     -  movss xmm1,[rbx+00000190]
+"EoCApp.exe"+97E28F: EB 1F                       -  jmp EoCApp.exe+97E2B0
+"EoCApp.exe"+97E291: 84 C0                       -  test al,al
+"EoCApp.exe"+97E293: 74 13                       -  je EoCApp.exe+97E2A8
+"EoCApp.exe"+97E295: 80 BB F5 00 00 00 00        -  cmp byte ptr [rbx+000000F5],00
+"EoCApp.exe"+97E29C: 74 0A                       -  je EoCApp.exe+97E2A8
+"EoCApp.exe"+97E29E: F3 0F 10 8B 84 01 00 00     -  movss xmm1,[rbx+00000184]
+"EoCApp.exe"+97E2A6: EB 08                       -  jmp EoCApp.exe+97E2B0
+}
+</AssemblerScript>
+    </CheatEntry>
+  </CheatEntries>
+  <CheatCodes>
+    <CodeEntry>
+      <Description>Code :movss xmm2,[rbx+0000017C]</Description>
+      <Address>7FF70DC1E27A</Address>
+      <ModuleName>EoCApp.exe</ModuleName>
+      <ModuleNameOffset>97E27A</ModuleNameOffset>
+      <Before>
+        <Byte>01</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+        <Byte>EB</Byte>
+        <Byte>08</Byte>
+      </Before>
+      <Actual>
+        <Byte>F3</Byte>
+        <Byte>0F</Byte>
+        <Byte>10</Byte>
+        <Byte>93</Byte>
+        <Byte>7C</Byte>
+        <Byte>01</Byte>
+        <Byte>00</Byte>
+        <Byte>00</Byte>
+      </Actual>
+      <After>
+        <Byte>83</Byte>
+        <Byte>F9</Byte>
+        <Byte>01</Byte>
+        <Byte>76</Byte>
+        <Byte>0A</Byte>
+      </After>
+    </CodeEntry>
+  </CheatCodes>
+  <UserdefinedSymbols/>
+  <Comments>Info about this table:
+</Comments>
+</CheatTable>
